@@ -26,19 +26,17 @@
     background:#030604;
     width:794px; margin:0 auto;
   }
-  @media screen { .page { box-shadow: 0 4px 32px rgba(0,0,0,0.5); margin-bottom: 12px; } }
 
   /* ═══ PAGE ═══ */
   .page {
-    width:794px; height:1123px;
+    width:794px;
     background:var(--bg);
     position:relative;
-    page-break-before:always;
-    page-break-after:always;
-    break-before:page;
-    break-after:page;
-    overflow:hidden;
+    overflow:visible;
     display:flex; flex-direction:column;
+    margin-bottom:32px;
+    border:1px solid rgba(0,229,200,0.1);
+    box-shadow:0 8px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,229,200,0.06);
   }
   /* scanline texture on every page */
   .page::before {
@@ -48,10 +46,7 @@
       repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,229,200,0.018) 2px, rgba(0,229,200,0.018) 3px),
       repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(0,229,200,0.008) 80px, rgba(0,229,200,0.008) 81px);
   }
-  .page:first-child { page-break-before:auto; break-before:auto; }
-  .page:last-child  { page-break-after:auto;  break-after:auto;  }
-  @page { size: A4; margin: 0; }
-  @media print { body { background:none; width:210mm; } .page { width:210mm; height:297mm; page-break-before:always; page-break-after:always; } }
+  @media print { .page { page-break-after:always; break-after:page; box-shadow:none; margin-bottom:0; } }
 
   /* ═══ COVER ═══ */
   .cover {
@@ -61,7 +56,7 @@
       linear-gradient(170deg, #04100e 0%, #060d0c 50%, #030806 100%);
     color:var(--text);
     padding:38px 52px 0;
-    min-height:1123px;
+    
   }
   .cov-topbar { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:48px; }
   .cov-badge {
