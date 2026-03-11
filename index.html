@@ -396,7 +396,7 @@
     </table>
 
     <div class="stitle">Φυσικός Σχεδιασμός</div>
-    <p>Το περίβλημα της συσκευής έχει <strong>αιχμή/πάσσαλο στο κάτω μέρος</strong> για να μπαίνει στο έδαφος της τάφρου — διασφαλίζει πλήρη επαφή αισθητήρα-εδάφους για ακριβή μέτρηση δονήσεων. Το module M5StickC Plus 2 βρίσκεται από πάνω με την οθόνη του προς τα έξω, ώστε το προσωπικό του site να βλέπει την κατάσταση σε πραγματικό χρόνο χωρίς να ανοίξουν εφαρμογή.</p>
+    <p>Το περίβλημα της συσκευής έχει <strong>αιχμή/πάσσαλο στο κάτω μέρος</strong> που μπαίνει στο χώμα της τάφρου — έτσι ο αισθητήρας αγγίζει απευθείας το έδαφος και μετράει με μεγαλύτερη ακρίβεια. Η συσκευή M5StickC Plus 2 κάθεται από πάνω με την οθόνη της ορατή, ώστε όποιος βρίσκεται στον χώρο να βλέπει αμέσως την κατάσταση χωρίς να χρειαστεί να ανοίξει κάποια εφαρμογή.</p>
     <div class="two-col">
       <div class="col-card">
         <div class="col-card-title">Συνδεσιμότητα</div>
@@ -428,7 +428,7 @@
       <span class="badge dark">PlatformIO (σύστημα build)</span>
     </div>
 
-    <div class="warn-note"><strong>Flash στο 97,5%:</strong> Δεν υπάρχει σχεδόν χώρος για νέα χαρακτηριστικά firmware. Κάθε προσθήκη πρέπει να έρθει σε βάρος κάποιου άλλου στοιχείου, ή χρειάζεται μετάβαση σε M5Stack με περισσότερο Flash.</div>
+    <div class="warn-note"><strong>Μνήμη αισθητήρα σχεδόν γεμάτη (97,5%):</strong> Ο αισθητήρας δεν έχει σχεδόν καθόλου ελεύθερο χώρο για να προστεθούν νέα χαρακτηριστικά. Κάθε προσθήκη σημαίνει ότι κάτι άλλο πρέπει να αφαιρεθεί — ή ότι χρειαζόμαστε συσκευή με περισσότερη αποθηκευτική χωρητικότητα.</div>
 
   </div>
   <div class="pf"><span>AncientVision · Πλήρης Τεχνική Τεκμηρίωση · RoboticAlienz</span><span>Κεφ. 01 · Υλικό · σελ. 2</span></div>
@@ -460,11 +460,11 @@
 
     <div class="stitle">Βήμα-Βήμα Ανάλυση</div>
     <div class="step-list">
-      <div class="step"><div class="step-n">1</div><div><div class="step-title">Ανάγνωση IMU @ 200 Hz</div><div class="step-desc">Τα ακατέργαστα δεδομένα επιταχυνσιόμετρου (X, Y, Z) και γυροσκοπίου δειγματοληπτούνται 200 φορές/δευτερόλεπτο. Το DLPF εσωτερικά στο MPU6886 ορίζεται στα <strong>99 Hz</strong> — ακριβώς κάτω από το Nyquist — για αποτροπή aliasing πριν τα δεδομένα εγκαταλείψουν το chip.</div></div></div>
-      <div class="step"><div class="step-n">2</div><div><div class="step-title">Φίλτρο Madgwick AHRS</div><div class="step-desc">Ο αλγόριθμος Madgwick συνδυάζει δεδομένα επιταχυνσιόμετρου + γυροσκοπίου για εκτίμηση της <strong>πραγματικής 3D διεύθυνσης</strong> της συσκευής. Διορθώνει την κλίση: αν ο πάσσαλος μπει γωνιασμένος, οι μετρήσεις δόνησης στρέφονται στο αληθινό επίπεδο εδάφους πριν την ανάλυση.</div></div></div>
-      <div class="step"><div class="step-n">3</div><div><div class="step-title">Butterworth Bandpass — 0,5 έως 100 Hz</div><div class="step-desc">Φίλτρο 4ης τάξης Butterworth αφαιρεί ό,τι είναι κάτω από 0,5 Hz (αργή μετατόπιση, βαρύτητα) και πάνω από 100 Hz (ηλεκτρονικός θόρυβος). <strong>Σεισμικά συμβάντα ζουν στα 1–10 Hz, μηχανήματα στα 25–80 Hz</strong> — και τα δύο περνούν καθαρά.</div></div></div>
-      <div class="step"><div class="step-n">4</div><div><div class="step-title">FFT 256 σημείων (arduinoFFT)</div><div class="step-desc">Παράθυρο 256 δειγμάτων (~1,28 δευτερόλεπτα) τροφοδοτείται στο FFT. Ανάλυση συχνότητας = 200Hz / 256 = <strong>0,78 Hz ανά bin</strong>. Εξάγονται η κυρίαρχη συχνότητα και το φασματικό centroid. Αυτό διαχωρίζει ένα διερχόμενο φορτηγό από ένα σεισμικό κύμα — ίδιο PPV, εντελώς διαφορετική φασματική υπογραφή.</div></div></div>
-      <div class="step"><div class="step-n">5</div><div><div class="step-title">Εξαγωγή Χαρακτηριστικών — 17 πεδία</div><div class="step-desc">Από τα φιλτραρισμένα + FFT δεδομένα: <strong>PPV</strong> (mm/s), <strong>RMS</strong>, κυρίαρχη <strong>συχνότητα</strong> (Hz), <strong>crest factor</strong>, φασματικό <strong>centroid</strong>, <strong>kurtosis</strong>, αναλογία <strong>STA/LTA</strong>, <strong>ένταση Arias</strong>, <strong>CAV</strong>, <strong>θερμοκρασία</strong> (°C) και <strong>3 συντελεστές DWT</strong> (dwt1/dwt2/dwt3).</div></div></div>
+      <div class="step"><div class="step-n">1</div><div><div class="step-title">Ανάγνωση IMU @ 200 Hz</div><div class="step-desc">Ο αισθητήρας μετράει κίνηση (X, Y, Z) και περιστροφή <strong>200 φορές το δευτερόλεπτο</strong>. Ένα εσωτερικό φίλτρο του chip κόβει τυχαίους θορύβους ψηλής συχνότητας πριν τα δεδομένα φύγουν από τον αισθητήρα — ώστε να λαμβάνουμε καθαρές μετρήσεις από την αρχή.</div></div></div>
+      <div class="step"><div class="step-n">2</div><div><div class="step-title">Διόρθωση προσανατολισμού (Madgwick)</div><div class="step-desc">Συνδυάζει τις μετρήσεις κίνησης και περιστροφής για να υπολογίσει <strong>πού ακριβώς "κοιτάει" ο αισθητήρας</strong> στο χώρο. Αν ο πάσσαλος μπει λίγο γωνιασμένος στο έδαφος, αυτό το βήμα διορθώνει αυτόματα την κλίση — οι μετρήσεις παραμένουν σωστές ανεξαρτήτως γωνίας τοποθέτησης.</div></div></div>
+      <div class="step"><div class="step-n">3</div><div><div class="step-title">Φίλτρο Καθαρισμού — 0,5 έως 100 Hz</div><div class="step-desc">Αφαιρεί ό,τι δεν μας ενδιαφέρει: αργές μετατοπίσεις και τη βαρύτητα (κάτω από 0,5 Hz), καθώς και ηλεκτρονικό θόρυβο (πάνω από 100 Hz). Αυτό που μένει είναι ακριβώς η ζώνη όπου ζουν τα σεισμικά συμβάντα και τα μηχανήματα — <strong>1–10 Hz σεισμός, 25–80 Hz μηχανήματα</strong> — και τα δύο ανιχνεύονται καθαρά.</div></div></div>
+      <div class="step"><div class="step-n">4</div><div><div class="step-title">Ανάλυση Συχνότητας (FFT)</div><div class="step-desc">Κοιτάζει ~1,3 δευτερόλεπτα δεδομένων ταυτόχρονα και αναλύει <strong>ποιες συχνότητες κυριαρχούν</strong> στη δόνηση. Αυτό επιτρέπει να ξεχωρίσουμε ένα διερχόμενο φορτηγό από σεισμικό κύμα — μπορεί να έχουν την ίδια δύναμη, αλλά ο "ρυθμός" τους είναι εντελώς διαφορετικός. Εξάγεται η κυρίαρχη συχνότητα και το "κέντρο βάρους" του ήχου της δόνησης.</div></div></div>
+      <div class="step"><div class="step-n">5</div><div><div class="step-title">Υπολογισμός 17 Μετρήσεων</div><div class="step-desc">Από τα καθαρισμένα δεδομένα υπολογίζονται 17 τιμές που περιγράφουν κάθε δόνηση: <strong>PPV</strong> (μέγιστη ταχύτητα εδάφους, mm/s), <strong>RMS</strong> (μέση ενέργεια), κυρίαρχη <strong>συχνότητα</strong> (Hz), δείκτες έντασης κρούσης (<strong>crest</strong>, <strong>kurtosis</strong>), αναλογία αιφνίδιας αλλαγής (<strong>STA/LTA</strong>), σωρευτική ενέργεια (<strong>Arias</strong>, <strong>CAV</strong>), <strong>θερμοκρασία</strong> και <strong>3 δείκτες wavelet</strong> για ανίχνευση παροδικών συμβάντων.</div></div></div>
     </div>
 
     <div class="stitle">Λογική Απόφασης Alert (DIN 4150-3 + Triggers)</div>
@@ -480,10 +480,10 @@
       </tbody>
     </table>
 
-    <div class="note"><strong>Υστέρηση (Hysteresis):</strong> Τα alerts δεν σβήνουν αμέσως μόλις η τιμή πέσει κάτω από το κατώφλι. Απαιτούν πτώση στο 70% του κατωφλίου πριν σβήσουν. Αυτό αποτρέπει ταχεία εναλλαγή alert κατά τη διάρκεια ταλαντωτικών συμβάντων.</div>
+    <div class="note"><strong>Ο συναγερμός δεν σβήνει αμέσως:</strong> Όταν η τιμή πέσει κάτω από το όριο, ο συναγερμός δεν σβήνει αμέσως — απαιτεί να πέσει αρκετά χαμηλότερα (στο 70% του ορίου). Αυτό αποτρέπει τον συναγερμό να ανάβει και να σβήνει διαρκώς κατά τη διάρκεια μιας ταλαντευόμενης δόνησης.</div>
 
     <div class="stitle">Watchdog Timer</div>
-    <p>Ένα hardware watchdog τροφοδοτείται σε κάθε iteration του main loop. Αν ο κύριος βρόχος <strong>παγώσει για περισσότερο από 5 δευτερόλεπτα</strong> (π.χ. deadlock BLE stack, κόλλημα I2C), ο ESP32 εκτελεί σκληρό reset και το BLE advertising επανεκκινεί αυτόματα.</p>
+    <p>Ο αισθητήρας παρακολουθεί τον εαυτό του: αν κάτι <strong>κολλήσει και σταματήσει να ανταποκρίνεται για πάνω από 5 δευτερόλεπτα</strong> (π.χ. πρόβλημα στην επικοινωνία Bluetooth ή με τον αισθητήρα κίνησης), ο ESP32 κάνει αυτόματη επανεκκίνηση και η Bluetooth σύνδεση ξεκινά ξανά χωρίς καμία ανθρώπινη παρέμβαση.</p>
 
   </div>
   <div class="pf"><span>AncientVision · Πλήρης Τεχνική Τεκμηρίωση · RoboticAlienz</span><span>Κεφ. 02 · Firmware · σελ. 3</span></div>
@@ -500,15 +500,15 @@
       <div><div class="ch-num">Κεφάλαιο 03</div><div class="ch-name">Επικοινωνία BLE &amp; Πρωτόκολλο JSON</div></div>
     </div>
 
-    <div class="stitle">Το Πρόβλημα MTU — Γιατί Είναι Κρίσιμο</div>
-    <p>Το BLE έχει <strong>προεπιλεγμένο ATT MTU 23 bytes</strong> (20 bytes χρήσιμο payload). Ένα πακέτο JSON IMU είναι ~300 bytes. Στην v4.x αυτό σήμαινε ότι κάθε πακέτο κοβόταν σιωπηλά στα 20 bytes — το JSON ήταν κατεστραμμένο και η εφαρμογή λάμβανε σκουπίδια χωρίς κανένα σφάλμα. Η λύση: αίτημα <strong>MTU 512</strong> αμέσως μετά τη σύνδεση, σε κάθε μονοπάτι σύνδεσης.</p>
+    <div class="stitle">Το Πρόβλημα Μεγέθους Πακέτου — Γιατί Είναι Κρίσιμο</div>
+    <p>Το Bluetooth από προεπιλογή στέλνει <strong>πολύ μικρά πακέτα</strong> (μόλις 20 χρήσιμα bytes). Τα δεδομένα που στέλνει ο αισθητήρας είναι ~300 bytes. Στην παλιά έκδοση, κάθε πακέτο κοβόταν αθόρυβα στα 20 bytes — η εφαρμογή νόμιζε ότι έλαβε σωστά δεδομένα ενώ ήταν ακρωτηριασμένα, χωρίς κανένα μήνυμα σφάλματος. Η λύση: ζητάμε αμέσως μετά τη σύνδεση μεγαλύτερο πακέτο (<strong>512 bytes</strong>) — αρκετό για να χωρέσουν όλες οι μετρήσεις.</p>
     <div class="code-block">
 <span class="cc">// Flutter — καλείται και στα ΔΥΟ μονοπάτια: κανονική σύνδεση ΚΑΙ "ήδη συνδεδεμένη" συσκευή</span>
 <span class="ck">await</span> device.<span class="ck">requestMtu</span>(<span class="cv">512</span>);
 <span class="cc">// Τυλιγμένο σε try/catch — αποτυχία MTU ΔΕΝ πρέπει να σκοτώσει τη ροή σύνδεσης</span>
 <span class="ck">await</span> Future.delayed(Duration(milliseconds: <span class="cv">500</span>)); <span class="cc">// αναμονή πριν ανακάλυψη services</span>
     </div>
-    <div class="warn-note"><strong>Κρίσιμο:</strong> Υπάρχουν δύο μονοπάτια σύνδεσης στην εφαρμογή — κανονική σύνδεση και επαναχρησιμοποίηση ήδη συνδεδεμένης συσκευής. Η διαπραγμάτευση MTU πρέπει να γίνει <em>και στα δύο</em> αλλιώς η δεύτερη σύνδεση επιστρέφει σιωπηλά σε 20-byte mode.</div>
+    <div class="warn-note"><strong>Κρίσιμο:</strong> Η εφαρμογή συνδέεται με δύο τρόπους — φρέσκια σύνδεση ή επανασύνδεση σε ήδη συνδεδεμένη συσκευή. Το αίτημα για μεγαλύτερο πακέτο πρέπει να γίνει <em>και στις δύο περιπτώσεις</em>, αλλιώς η δεύτερη σύνδεση επιστρέφει αθόρυβα στα μικρά πακέτα και τα δεδομένα κόβονται ξανά.</div>
 
     <div class="stitle">Πακέτο Δεδομένων IMU — Σχήμα JSON 17 Πεδίων</div>
     <div class="code-block">
@@ -554,7 +554,7 @@
       </div>
     </div>
 
-    <div class="note"><strong>Ροή parsing:</strong> raw bytes → αποκωδικοποίηση UTF-8 → αφαίρεση nulls → έλεγχος τέλους με <code>}</code> → <code>jsonDecode()</code> → cast σε <code>Map&lt;String, dynamic&gt;</code> → δημιουργία αντικειμένου μοντέλου δεδομένων.</div>
+    <div class="note"><strong>Πώς διαβάζεται κάθε πακέτο:</strong> Τα bytes μετατρέπονται σε κείμενο → αφαιρούνται τυχόν κενά padding → ελέγχεται ότι δεν έχει κοπεί το πακέτο → αναλύεται το JSON → δημιουργείται αντικείμενο δεδομένων για χρήση από την εφαρμογή.</div>
 
   </div>
   <div class="pf"><span>AncientVision · Πλήρης Τεχνική Τεκμηρίωση · RoboticAlienz</span><span>Κεφ. 03 · Πρωτόκολλο BLE · σελ. 4</span></div>
@@ -585,8 +585,8 @@
       <span class="badge gold">APK 150,2 MB</span>
     </div>
 
-    <div class="stitle">Πλοήγηση — Γιατί IndexedStack</div>
-    <p>Η εφαρμογή χρησιμοποιεί <strong>IndexedStack</strong> για πλοήγηση καρτελών αντί για το προεπιλεγμένο <code>Navigator</code>. Αυτό διατηρεί <em>όλα τα widgets καρτελών ζωντανά ταυτόχρονα</em> — αλλάζει μόνο η ορατότητα. Ο κρίσιμος λόγος: <strong>αν το SafetyView (καρτέλα BLE) καταστρεφόταν κατά την πλοήγηση, η σύνδεση BLE θα διακοπτόταν</strong>. Το IndexedStack το αποτρέπει αυτό.</p>
+    <div class="stitle">Πλοήγηση — Γιατί Παραμένουν Ζωντανές Όλες οι Οθόνες</div>
+    <p>Η εφαρμογή διατηρεί <em>όλες τις οθόνες ενεργές ταυτόχρονα στο παρασκήνιο</em> — αλλάζει μόνο ποια φαίνεται. Ο κρίσιμος λόγος: <strong>αν η οθόνη ασφάλειας καταστρεφόταν κάθε φορά που αλλάζουμε καρτέλα, η Bluetooth σύνδεση με τον αισθητήρα θα διακοπτόταν</strong>. Με αυτόν τον τρόπο ο αισθητήρας παραμένει συνδεδεμένος ακόμα κι αν ο χρήστης κοιτάει τον χάρτη ή καταγράφει εύρημα.</p>
 
     <div class="stitle">Αρχιτεκτονική State</div>
     <table>
@@ -599,8 +599,8 @@
       </tbody>
     </table>
 
-    <div class="stitle">AlertMetrics — Κλάση Δεδομένων</div>
-    <p>Όταν ενεργοποιείται alert, ένα στιγμιότυπο όλων των σχετικών μετρικών αποθηκεύεται σε αντικείμενο <code>AlertMetrics</code> και περνά από το <code>SafetyView</code> στο <code>_DashboardScreenState</code>, το οποίο το μεταβιβάζει στο <code>FullScreenAlertOverlay</code>. Εξασφαλίζει ότι το overlay εμφανίζει πάντα τις τιμές <em>τη στιγμή που ενεργοποιήθηκε το alert</em>.</p>
+    <div class="stitle">Στιγμιότυπο Δεδομένων Συναγερμού</div>
+    <p>Όταν ενεργοποιείται συναγερμός, η εφαρμογή αποθηκεύει αμέσως <em>όλες τις σχετικές τιμές εκείνης της στιγμής</em> — ταχύτητα δόνησης, συχνότητα, τύπο κινδύνου κ.ά. Αυτές οι αποθηκευμένες τιμές εμφανίζονται στην οθόνη συναγερμού, ώστε ο χρήστης να βλέπει <em>ακριβώς γιατί ενεργοποιήθηκε ο συναγερμός</em> — ακόμα κι αν η δόνηση έχει ήδη σταματήσει.</p>
     <div class="code-block">
 <span class="cc">// AlertMetrics καταγράφει την κατάσταση τη στιγμή ενεργοποίησης alert</span>
 <span class="ck">class</span> AlertMetrics <span class="cp">{</span>
@@ -646,11 +646,11 @@
 
     <div class="stitle">Ροή Ενεργοποίησης Alert</div>
     <div class="step-list">
-      <div class="step"><div class="step-n">1</div><div><div class="step-title">Φτάνει BLE notification → γίνεται parsing του πακέτου IMU</div><div class="step-desc">Κάθε ~5ms φτάνει νέο πακέτο JSON. Το <code>SafetyView</code> κάνει parsing και ανανεώνει την live οθόνη (μετρητής PPV, spectrogram, γράφημα DWT).</div></div></div>
-      <div class="step"><div class="step-n">2</div><div><div class="step-title">Πρώτα τρέχουν οι κανονιστικοί έλεγχοι (κατώφλια firmware)</div><div class="step-desc">Αν το firmware αποφάσισε ήδη να στείλει πακέτο JSON Alert, η εφαρμογή το αντιμετωπίζει ως <span class="badge red" style="font-size:10px;">FIRMWARE ALERT</span>. Το firmware έχει χαμηλότερη καθυστέρηση — τρέχει στα 200Hz χωρίς overhead OS.</div></div></div>
-      <div class="step"><div class="step-n">3</div><div><div class="step-title">Έλεγχοι πλευράς εφαρμογής (VAE + επιπλέον κανόνες)</div><div class="step-desc">Παράλληλα, η εφαρμογή εκτελεί τους δικούς της ελέγχους STA/LTA + kurtosis + crest στα ληφθέντα δεδομένα, καθώς και <strong>VAE inference</strong>. Αυτό είναι το Tier 2 layer — συλλαμβάνει ανωμαλίες που χάνουν οι σταθεροί κανόνες του firmware.</div></div></div>
-      <div class="step"><div class="step-n">4</div><div><div class="step-title">Στιγμιότυπο AlertMetrics + callback στο DashboardScreen</div><div class="step-desc">Το <code>SafetyView</code> καλεί <code>onAlertTriggered(AlertMetrics)</code> μεταβιβάζοντας το πλήρες στιγμιότυπο στην γονική κατάσταση.</div></div></div>
-      <div class="step"><div class="step-n">5</div><div><div class="step-title">Το FullScreenAlertOverlay εμφανίζεται ως Stack overlay</div><div class="step-desc">Το overlay είναι child του <code>Stack</code> που renderάρεται πάνω από ολόκληρο το <code>Scaffold</code> — εμφανίζεται ανεξαρτήτως ποια καρτέλα είναι ενεργή. Glassmorphism στυλ, κόκκινο gradient περίγραμμα, εικονίδιο ανά τύπο κινδύνου.</div></div></div>
+      <div class="step"><div class="step-n">1</div><div><div class="step-title">Φτάνουν νέα δεδομένα από τον αισθητήρα</div><div class="step-desc">Κάθε ~5ms φτάνει νέο πακέτο μετρήσεων από τον αισθητήρα μέσω Bluetooth. Η εφαρμογή το διαβάζει και ανανεώνει αμέσως την οθόνη με τις τελευταίες τιμές δόνησης.</div></div></div>
+      <div class="step"><div class="step-n">2</div><div><div class="step-title">Πρώτος έλεγχος: ο αισθητήρας έστειλε ήδη συναγερμό;</div><div class="step-desc">Αν ο ίδιος ο αισθητήρας έχει ήδη αποφασίσει ότι υπάρχει κίνδυνος και έχει στείλει ειδοποίηση, η εφαρμογή την αντιμετωπίζει ως <span class="badge red" style="font-size:10px;">FIRMWARE ALERT</span>. Ο αισθητήρας είναι πιο γρήγορος — αναλύει 200 φορές το δευτερόλεπτο χωρίς τη "βαρύτητα" ενός λειτουργικού συστήματος.</div></div></div>
+      <div class="step"><div class="step-n">3</div><div><div class="step-title">Δεύτερος έλεγχος: ανάλυση από την εφαρμογή (AI + επιπλέον κανόνες)</div><div class="step-desc">Παράλληλα, η εφαρμογή κάνει τους δικούς της ελέγχους στα δεδομένα — συγκρίνει αιφνίδιες αλλαγές, εντοπίζει κρούσεις και εκτελεί το <strong>μοντέλο AI</strong>. Αυτό είναι το δεύτερο επίπεδο προστασίας — πιάνει ασυνήθιστα μοτίβα που οι απλοί κανόνες του αισθητήρα δεν καλύπτουν.</div></div></div>
+      <div class="step"><div class="step-n">4</div><div><div class="step-title">Αποθήκευση δεδομένων της στιγμής του συναγερμού</div><div class="step-desc">Αμέσως μόλις ενεργοποιηθεί συναγερμός, η εφαρμογή αποθηκεύει "φωτογραφία" όλων των τιμών εκείνης της στιγμής και την προωθεί στην κεντρική οθόνη για να εμφανιστεί στον χρήστη.</div></div></div>
+      <div class="step"><div class="step-n">5</div><div><div class="step-title">Εμφάνιση οθόνης συναγερμού πάνω από τα πάντα</div><div class="step-desc">Η οθόνη συναγερμού "σκεπάζει" ολόκληρη την εφαρμογή — εμφανίζεται ανεξαρτήτως σε ποια καρτέλα βρισκόταν ο χρήστης. Κόκκινο περίγραμμα, γυαλιστερό στυλ και διαφορετικό εικονίδιο ανά τύπο κινδύνου.</div></div></div>
     </div>
 
     <div class="stitle">Overlay Alert — Στοιχεία</div>
@@ -687,10 +687,10 @@
       </tbody>
     </table>
 
-    <div class="stitle">Badges Πηγής στις Κάρτες Ευρημάτων</div>
-    <p>Κάθε καταγεγραμμένο εύρημα στην εφαρμογή φέρει badge πηγής: <span class="badge teal">AI</span> για ευρήματα που ενεργοποιήθηκαν από VAE, <span class="badge dark">Γρήγορο</span> για γρήγορες χειροκίνητες καταχωρήσεις, <span class="badge gold">Χειροκίνητο</span> για πλήρεις εγγραφές χρήστη. Επιτρέπει στην ομάδα να διακρίνει AI-εντοπισμένα συμβάντα από χειροκίνητα καταγεγραμμένα κατά την ανασκόπηση.</p>
+    <div class="stitle">Ετικέτες Πηγής στα Καταγεγραμμένα Ευρήματα</div>
+    <p>Κάθε καταγεγραμμένο εύρημα φέρει ετικέτα που δείχνει πώς καταγράφηκε: <span class="badge teal">AI</span> για ευρήματα που εντόπισε αυτόματα το μοντέλο AI, <span class="badge dark">Γρήγορο</span> για γρήγορες χειροκίνητες καταχωρήσεις, <span class="badge gold">Χειροκίνητο</span> για πλήρεις καταχωρήσεις από τον χρήστη. Έτσι η ομάδα μπορεί αργότερα να διακρίνει τι εντόπισε το AI από ό,τι κατέγραψε ο ίδιος ο αρχαιολόγος.</p>
 
-    <div class="note"><strong>Κατάσταση σίγασης:</strong> Καθολική σημαία mute στο <code>_DashboardScreenState</code> σιγάζει τον ήχο alert ενώ το οπτικό overlay παραμένει ενεργό. Χρήσιμο όταν ο ήχος θα διατάρασσε λεπτή ανασκαφή.</div>
+    <div class="note"><strong>Λειτουργία σίγασης:</strong> Υπάρχει επιλογή να σιγαστεί ο ήχος του συναγερμού, ενώ η οπτική ειδοποίηση στην οθόνη παραμένει ενεργή. Χρήσιμο όταν ο ήχος θα διατάρασσε λεπτές εργασίες ανασκαφής.</div>
 
   </div>
   <div class="pf"><span>AncientVision · Πλήρης Τεχνική Τεκμηρίωση · RoboticAlienz</span><span>Κεφ. 05 · Ασφάλεια · σελ. 6</span></div>
@@ -707,8 +707,8 @@
       <div><div class="ch-num">Κεφάλαιο 06</div><div class="ch-name">Σύστημα GIS &amp; Χαρτογράφησης</div></div>
     </div>
 
-    <div class="stitle">Stack Χάρτη</div>
-    <p>Ο χάρτης βασίζεται στο <strong>flutter_map</strong> (τύπου Leaflet για Flutter) με δορυφορικούς tiles <strong>Esri World Imagery</strong> ως προεπιλεγμένο basemap. Ένας διακόπτης εναλλάσσει μεταξύ δορυφορικής και street view OpenStreetMap. Όλη η ανάκτηση tiles διέρχεται μέσω <code>CachedTileProvider</code> για offline υποστήριξη.</p>
+    <div class="stitle">Διαδραστικός Χάρτης</div>
+    <p>Ο χάρτης λειτουργεί με <strong>δορυφορικές εικόνες</strong> ως προεπιλογή (υψηλή ανάλυση, κατάλληλες για αναγνώριση τοποθεσίας). Ένας διακόπτης εναλλάσσει μεταξύ δορυφορικής εικόνας και οδικού χάρτη OpenStreetMap. Οι εικόνες του χάρτη αποθηκεύονται αυτόματα στο κινητό για χρήση χωρίς σύνδεση στο internet.</p>
     <div class="badge-row">
       <span class="badge teal">flutter_map</span>
       <span class="badge teal">Esri World Imagery (δορυφορικό)</span>
@@ -718,8 +718,8 @@
       <span class="badge dark">geolocator</span>
     </div>
 
-    <div class="stitle">Σύστημα Layers — _LayerEntry</div>
-    <p>Κάθε layer δεδομένων (GeoJSON ή Shapefile) τυλίγεται σε αντικείμενο <code>_LayerEntry</code> που κρατά το layer, ένα boolean <code>visible</code> και σημαία <code>isBundled</code>. Το πλαίσιο χάρτη δείχνει checkboxes ανά layer (εναλλαγή ορατότητας) και κουμπί διαγραφής — <em>τα bundled layers δεν έχουν κουμπί διαγραφής</em>.</p>
+    <div class="stitle">Σύστημα Επιπέδων (Layers)</div>
+    <p>Κάθε επίπεδο δεδομένων (GeoJSON ή Shapefile) έχει τρεις ιδιότητες: το ίδιο το περιεχόμενο, αν <strong>είναι ορατό</strong> ή κρυφό, και αν είναι ενσωματωμένο στην εφαρμογή ή φορτωμένο από τον χρήστη. Ο χρήστης βλέπει checkboxes για να ενεργοποιεί/απενεργοποιεί κάθε επίπεδο και κουμπί διαγραφής — <em>τα ενσωματωμένα επίπεδα δεν έχουν κουμπί διαγραφής</em>.</p>
     <table>
       <thead class="teal"><tr><th>Τύπος Layer</th><th>Πηγή</th><th>Διαγραφή</th></tr></thead>
       <tbody>
@@ -730,12 +730,12 @@
       </tbody>
     </table>
 
-    <div class="stitle">ShapefileService — Καθαρός Dart Parser SHP+DBF</div>
-    <p>Τα Shapefiles είναι η βιομηχανική πρότυπη μορφή στο αρχαιολογικό GIS (QGIS, ArcGIS). Το <code>ShapefileService</code> υλοποιεί έναν <strong>καθαρό Dart δυαδικό parser</strong> — χωρίς native code, χωρίς εξωτερική διεργασία. Διαβάζει τα αρχεία <code>.shp</code> (γεωμετρία) και <code>.dbf</code> (χαρακτηριστικά) από ZIP αρχείο και τα εξάγει ως GeoJSON. Υποστηρίζει: Point, PolyLine, Polygon, MultiPoint.</p>
-    <div class="note"><strong>Γιατί καθαρός Dart;</strong> Τα Flutter plugins για Shapefiles είναι ανεπίσημα ή απαιτούν native compilation. Η υλοποίηση Dart λειτουργεί σε όλες τις πλατφόρμες χωρίς ρύθμιση.</div>
+    <div class="stitle">Υποστήριξη Shapefile — Τυπική Μορφή Αρχαιολογικού GIS</div>
+    <p>Τα Shapefiles (αρχεία <code>.shp</code>) είναι η βιομηχανική πρότυπη μορφή στο αρχαιολογικό GIS — τα χρησιμοποιούν τα QGIS, ArcGIS και σχεδόν κάθε αρχαιολογική υπηρεσία. Η εφαρμογή μπορεί να τα διαβάσει απευθείας από ZIP αρχείο και να τα μετατρέψει σε GeoJSON για προβολή στον χάρτη. Υποστηρίζει σημεία, γραμμές, πολύγωνα και σύνθετα σχήματα.</p>
+    <div class="note"><strong>Γιατί δεν χρησιμοποιούμε έτοιμη βιβλιοθήκη;</strong> Τα διαθέσιμα πρόσθετα για Shapefiles δεν είναι επίσημα ή χρειάζονται ειδικές ρυθμίσεις ανά πλατφόρμα. Η δική μας υλοποίηση λειτουργεί σε Android και Windows χωρίς καμία επιπλέον ρύθμιση.</div>
 
-    <div class="stitle">Popup Πληροφοριών Feature — Ανίχνευση Ray-Cast</div>
-    <p>Πάτημα οπουδήποτε στον χάρτη ενεργοποιεί ray-cast έλεγχο σε όλα τα ορατά polygon layers. Ο αλγόριθμος ελέγχει αν οι συντεταγμένες του πατήματος βρίσκονται <strong>μέσα σε κάποιο polygon</strong> χρησιμοποιώντας τον κανόνα even-odd — ο ίδιος αλγόριθμος που χρησιμοποιεί το GIS λογισμικό. Αν βρεθεί αποτέλεσμα, μια κάρτα ανεβαίνει από το κάτω μέρος δείχνοντας την ετικέτα/χαρακτηριστικά του feature.</p>
+    <div class="stitle">Popup Πληροφοριών — Πάτημα σε Σχήμα</div>
+    <p>Όταν ο χρήστης πατάει κάπου στον χάρτη, η εφαρμογή ελέγχει αν το σημείο βρίσκεται μέσα σε κάποιο ορατό σχήμα (πολύγωνο). Ο έλεγχος χρησιμοποιεί τον ίδιο αλγόριθμο που χρησιμοποιεί το επαγγελματικό λογισμικό GIS. Αν βρεθεί σχήμα, μια κάρτα ανεβαίνει από το κάτω μέρος της οθόνης δείχνοντας την ετικέτα και τα χαρακτηριστικά του.</p>
 
     <div class="stitle">Μπλε Κουκίδα GPS &amp; Offline Tiles</div>
     <div class="two-col">
@@ -761,8 +761,8 @@
       </div>
     </div>
 
-    <div class="stitle">Επιμονή Layers</div>
-    <p>Τα layers που εισάγει ο χρήστης αποθηκεύονται μέσω <code>SharedPreferences</code> ως σειριοποιημένες συμβολοσειρές GeoJSON. Φορτώνονται αυτόματα κατά την επανεκκίνηση της εφαρμογής. Τα bundled layers φορτώνονται πάντα από τα <code>assets/</code> και δεν μπορούν να αφαιρεθούν από τον χρήστη.</p>
+    <div class="stitle">Αποθήκευση Επιπέδων</div>
+    <p>Τα επίπεδα που φορτώνει ο χρήστης αποθηκεύονται στη μνήμη του κινητού ως GeoJSON και φορτώνονται αυτόματα κάθε φορά που ξεκινάει η εφαρμογή. Τα ενσωματωμένα επίπεδα φορτώνονται πάντα από τα αρχεία της εφαρμογής και δεν μπορούν να διαγραφούν από τον χρήστη.</p>
 
   </div>
   <div class="pf"><span>AncientVision · Πλήρης Τεχνική Τεκμηρίωση · RoboticAlienz</span><span>Κεφ. 06 · GIS · σελ. 7</span></div>
@@ -779,8 +779,8 @@
       <div><div class="ch-num">Κεφάλαιο 07</div><div class="ch-name">Τεχνητή Νοημοσύνη — Variational Autoencoder (VAE)</div></div>
     </div>
 
-    <div class="stitle">Γιατί Autoencoder και όχι Classifier;</div>
-    <p>Ένας classifier (π.χ. "είναι αυτό σεισμικό συμβάν; ναι/όχι") απαιτεί <strong>ετικετιασμένα παραδείγματα κάθε τύπου κινδύνου</strong>. Δεν έχουμε χιλιάδες πραγματικά συμβάντα κατάρρευσης τάφρου για εκπαίδευση. Ο autoencoder ακολουθεί διαφορετική προσέγγιση: <strong>εκπαίδευση μόνο με κανονικά, ασφαλή δεδομένα</strong>. Αν συμβεί κάτι ασυνήθιστο που το μοντέλο δεν έχει ξαναδεί, δεν μπορεί να το ανακατασκευάσει με ακρίβεια — και αυτή η αποτυχία ανακατασκευής <em>είναι</em> το σήμα ανωμαλίας.</p>
+    <div class="stitle">Γιατί AI ανίχνευσης ανωμαλίας και όχι κατηγοριοποιητής;</div>
+    <p>Ένας κατηγοριοποιητής ("αυτό είναι σεισμός; ναι/όχι") χρειάζεται <strong>χιλιάδες παραδείγματα κατάρρευσης τάφρου για εκπαίδευση</strong> — κάτι που δεν υπάρχει. Το μοντέλο μας ακολουθεί διαφορετικό δρόμο: <strong>εκπαιδεύεται μόνο σε κανονικές, ασφαλείς δονήσεις</strong> και μαθαίνει πώς "μοιάζει" το φυσιολογικό. Όταν συμβεί κάτι ασυνήθιστο που δεν έχει ξαναδεί, δεν μπορεί να το "αναγνωρίσει" σωστά — και <em>αυτή η αδυναμία αναγνώρισης</em> είναι το σήμα κινδύνου.</p>
 
     <div class="stitle">Αρχιτεκτονική VAE</div>
     <div class="pipeline" style="margin-bottom:6px;">
@@ -798,7 +798,7 @@
       <div class="parr">▶</div>
       <div class="pnode n-out" style="flex:none;width:60px;"><div class="ni">📤</div><div class="nn">Έξοδος</div><div class="nd">10 χαρ/κά</div></div>
     </div>
-    <p style="font-size:12px;color:#666;margin-bottom:10px;">Αρχιτεκτονική: 10 → 8 → 6 → <strong>latent(4)</strong> → 6 → 8 → 10 · ποσοτικοποίηση float16 · αρχείο μοντέλου: <code>assets/ml/vibration_anomaly.tflite</code></p>
+    <p style="font-size:12px;color:#666;margin-bottom:10px;">Δομή: 10 είσοδοι → συμπίεση σε 4 βασικές αξίες → επέκταση πίσω σε 10 έξοδοι · βελτιστοποιημένο για κινητές συσκευές · αρχείο μοντέλου: <code>assets/ml/vibration_anomaly.tflite</code></p>
 
     <div class="stitle">Χαρακτηριστικά Εισόδου (10)</div>
     <table>
@@ -819,10 +819,10 @@
 
     <div class="stitle">Pipeline Inference</div>
     <div class="step-list">
-      <div class="step"><div class="step-n">1</div><div><div class="step-title">Κανονικοποίηση με scaler (<code>vibration_scaler.json</code>)</div><div class="step-desc">Κάθε χαρακτηριστικό κανονικοποιείται με προ-υπολογισμένη <strong>μέση τιμή και τυπική απόκλιση</strong> από τα δεδομένα εκπαίδευσης: <code>z = (x - mean) / std</code>. Χωρίς αυτό, χαρακτηριστικά σε διαφορετικές κλίμακες θα κυριαρχούσαν λανθασμένα.</div></div></div>
-      <div class="step"><div class="step-n">2</div><div><div class="step-title">Εκτέλεση TFLite interpreter</div><div class="step-desc">Το ποσοτικοποιημένο float16 μοντέλο φορτώνεται μία φορά κατά την εκκίνηση της εφαρμογής μέσω <code>tflite_flutter</code>. Το inference διαρκεί <strong>&lt;2ms</strong> σε μεσαία Android συσκευή — ουσιαστικά αμελητέο σε σχέση με το διάστημα polling BLE.</div></div></div>
-      <div class="step"><div class="step-n">3</div><div><div class="step-title">Υπολογισμός σφάλματος ανακατασκευής (MSE)</div><div class="step-desc">Σύγκριση 10 τιμών εξόδου του μοντέλου με τις 10 τιμές εισόδου. <strong>Mean Squared Error (MSE)</strong> = μέσος όρος (output[i] - input[i])². Κανονικά δεδομένα = χαμηλό MSE. Ανώμαλα δεδομένα = υψηλό MSE.</div></div></div>
-      <div class="step"><div class="step-n">4</div><div><div class="step-title">Απόφαση κατωφλίου</div><div class="step-desc">Αν MSE &gt; κατώφλι (καθορίζεται κατά την εκπαίδευση ως το 99ο εκατοστημόριο του MSE κανονικών δεδομένων), το δείγμα σημαίνεται ως ανώμαλο και η εφαρμογή ενεργοποιεί alert <span class="badge red" style="font-size:10px;">VAE ΑΝΩΜΑΛΙΑ</span>.</div></div></div>
+      <div class="step"><div class="step-n">1</div><div><div class="step-title">Εξισορρόπηση τιμών (<code>vibration_scaler.json</code>)</div><div class="step-desc">Οι 10 μετρήσεις έχουν τελείως διαφορετικές κλίμακες — η ταχύτητα είναι σε mm/s, η θερμοκρασία σε °C, η συχνότητα σε Hz. Πριν δοθούν στο AI, <strong>ομαλοποιούνται ώστε να έχουν συγκρίσιμες κλίμακες</strong>. Χωρίς αυτό, ορισμένες μετρήσεις θα "φώναζαν" πιο δυνατά από άλλες και το AI θα λάμβανε λάθος αποφάσεις.</div></div></div>
+      <div class="step"><div class="step-n">2</div><div><div class="step-title">Εκτέλεση μοντέλου AI στο κινητό</div><div class="step-desc">Το μοντέλο φορτώνεται μία φορά όταν ξεκινάει η εφαρμογή και παραμένει έτοιμο. Κάθε ανάλυση διαρκεί <strong>λιγότερο από 2ms</strong> — ουσιαστικά αστραπιαία σε σχέση με το ρυθμό άφιξης δεδομένων από τον αισθητήρα. Τρέχει πλήρως offline, χωρίς σύνδεση σε διακομιστή.</div></div></div>
+      <div class="step"><div class="step-n">3</div><div><div class="step-title">Μέτρηση "πόσο καλά αναγνωρίστηκε" η δόνηση</div><div class="step-desc">Το μοντέλο προσπαθεί να "αναπαράγει" τις 10 μετρήσεις εισόδου. Μετά συγκρίνουμε το αποτέλεσμα με τις πραγματικές τιμές. <strong>Αν η δόνηση είναι φυσιολογική</strong>, η σύγκριση δείχνει μικρή διαφορά. <strong>Αν είναι ανώμαλη</strong>, η διαφορά είναι μεγάλη — το μοντέλο "δεν την αναγνωρίζει".</div></div></div>
+      <div class="step"><div class="step-n">4</div><div><div class="step-title">Απόφαση: φυσιολογικό ή ανώμαλο;</div><div class="step-desc">Αν η διαφορά ξεπεράσει ένα όριο που ορίστηκε κατά την εκπαίδευση (τόσο υψηλό ώστε το 99% των φυσιολογικών δεδομένων να το ξεπερνά), η δόνηση χαρακτηρίζεται ανώμαλη και η εφαρμογή ενεργοποιεί alert <span class="badge red" style="font-size:10px;">VAE ΑΝΩΜΑΛΙΑ</span>.</div></div></div>
     </div>
 
     <div class="stitle">Θέση &amp; Μέγεθος Αρχείου Μοντέλου</div>
